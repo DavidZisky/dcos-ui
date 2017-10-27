@@ -28,7 +28,7 @@ describe("TaskDirectoryActions", function() {
     beforeEach(function() {
       spyOn(RequestUtil, "json");
       TaskDirectoryActions.fetchNodeState(
-        { framework_id: "foo", id: "bar", slave_id: "baz" },
+        { framework_id: "foo", id: "bar", agent_id: "baz" },
         { pid: "foobar@baz", id: "baz" },
         "some/path"
       );
@@ -93,7 +93,7 @@ describe("TaskDirectoryActions", function() {
     beforeEach(function() {
       spyOn(RequestUtil, "json");
       TaskDirectoryActions.fetchDirectory(
-        { framework_id: "foo", id: "bar", slave_id: "baz" },
+        { framework_id: "foo", id: "bar", agent_id: "baz" },
         "",
         {
           frameworks: [

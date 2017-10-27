@@ -1,6 +1,7 @@
 import {
   GET_AGENTS,
-  AGENT_ADDED
+  AGENT_ADDED,
+  AGENT_REMOVED
 } from "../../../constants/MesosStreamMessageTypes";
 import { scalar } from "./ProtobufUtil";
 
@@ -27,7 +28,7 @@ export function getAgentsAction(state, message) {
     return acc.concat(message.get_agents[key].map(processAgent));
   }, []);
 
-  return Object.assign(state, { slaves: agents });
+  return Object.assign({}, state, { slaves: agents });
 }
 
 export function agentAddedAction(state, message) {
@@ -37,5 +38,16 @@ export function agentAddedAction(state, message) {
 
   const agent = processAgent(message.agent_added.agent);
 
-  return Object.assign(state, { slaves: [...state.slaves, agent] });
+  return Object.assign({}, state, { slaves: [...state.slaves, agent] });
+}
+
+export function agentRemovedAction(state, message) {
+  if (message.type !== AGENT_REMOVED) {
+    return state;
+  }
+
+  const removedAgent = processAgent(message.agent_removed.agent);
+  const slaves = state.slaves.filter(agent => removedAgent.id !== agent.id);
+
+  return Object.assign({}, state, { slaves });
 }

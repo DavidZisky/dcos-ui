@@ -29,7 +29,7 @@
     "externalplugins": ""
   },
   "dependencies": {
-    "@dcos/mesos-client": "0.1.2",
+    "@dcos/mesos-client": "0.1.5",
     "babel-polyfill": "6.23.0",
     "browser-info": "0.4.0",
     "classnames": "2.2.3",

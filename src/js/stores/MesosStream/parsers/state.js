@@ -8,7 +8,7 @@ import {
 
 import { getFrameworksAction } from "./frameworks";
 import { getTasksAction } from "./tasks";
-import { getExecutorsAction } from "./executors";
+import getExecutorsAction from "./executors";
 import { getAgentsAction } from "./agents";
 
 export default function getStateAction(state, message) {
@@ -44,7 +44,7 @@ export default function getStateAction(state, message) {
     agentsPartial = getAgentsAction({}, getAgentsMessage);
   }
 
-  return Object.assign(state, {
+  return Object.assign({}, state, {
     ...agentsPartial,
     ...executorsPartial,
     ...frameworksPartial,

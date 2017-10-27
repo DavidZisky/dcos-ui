@@ -26,7 +26,7 @@ class TaskFileBrowser extends React.Component {
         files={directory.getItems()}
         onFileClick={this.handleFileClick}
         onOpenLogClick={onOpenLogClick}
-        nodeID={task.slave_id}
+        nodeID={task.agent_id}
       />
     );
   }

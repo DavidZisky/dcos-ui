@@ -16,7 +16,7 @@ export default function subscribedAction(state, message) {
   };
   const statePartial = getStateAction({}, getStateMessage);
 
-  return Object.assign(state, {
+  return Object.assign({}, state, {
     ...statePartial
   });
 }

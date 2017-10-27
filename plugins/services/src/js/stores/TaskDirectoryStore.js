@@ -25,7 +25,7 @@ var requestInterval = null;
 var activeXHR = null;
 
 function fetchState(task, innerPath) {
-  const node = MesosStateStore.getNodeFromID(task.slave_id);
+  const node = MesosStateStore.getNodeFromID(task.agent_id);
   activeXHR = TaskDirectoryActions.fetchNodeState(task, node, innerPath);
 }
 

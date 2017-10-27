@@ -47,7 +47,7 @@ class TaskDetailsTab extends React.Component {
     const services = CompositeState.getServiceList();
     const service = services.filter({ ids: [mesosTask.framework_id] }).last();
     const node = CompositeState.getNodesList()
-      .filter({ ids: [mesosTask.slave_id] })
+      .filter({ ids: [mesosTask.agent_id] })
       .last();
     const sandBoxPath = TaskDirectoryStore.get("sandBoxPath");
 

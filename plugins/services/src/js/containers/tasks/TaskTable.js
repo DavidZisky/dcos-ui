@@ -310,7 +310,7 @@ class TaskTable extends React.Component {
     return (
       <Link
         className="table-cell-link-secondary text-overflow"
-        to={`/nodes/${task.slave_id}`}
+        to={`/nodes/${task.agent_id}`}
         title={taskHostName}
       >
         {taskHostName}

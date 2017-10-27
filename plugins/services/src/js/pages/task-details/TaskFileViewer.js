@@ -26,7 +26,7 @@ class TaskFileViewer extends React.Component {
     const task = curState.task;
     const nextTask = nextState.task;
     const didSlaveIdChange =
-      task && nextTask && task.slave_id !== nextTask.slave_id;
+      task && nextTask && task.agent_id !== nextTask.agent_id;
 
     const didTaskChange = curProps.task !== nextProps.task || didSlaveIdChange;
 
@@ -195,7 +195,7 @@ class TaskFileViewer extends React.Component {
         <a
           className="button button-stroke"
           disabled={!filePath}
-          href={TaskDirectoryActions.getDownloadURL(task.slave_id, filePath)}
+          href={TaskDirectoryActions.getDownloadURL(task.agent_id, filePath)}
         >
           <Icon id="download" size="mini" />
         </a>

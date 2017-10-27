@@ -22,7 +22,7 @@ describe("TaskFileViewer", function() {
         }
         params={{ filePath: "undefined" }}
         selectedLogFile={new DirectoryItem({ nlink: 1, path: "/stdout" })}
-        task={{ slave_id: "foo" }}
+        task={{ agent_id: "foo" }}
       />,
       this.container
     );
@@ -38,7 +38,7 @@ describe("TaskFileViewer", function() {
         <TaskFileViewer
           directory={new TaskDirectory({ items: [{ nlink: 1, path: "" }] })}
           params={{ filePath: "undefined" }}
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );
@@ -82,7 +82,7 @@ describe("TaskFileViewer", function() {
           }
           params={{ filePath: "/stderr" }}
           selectedLogFile={new DirectoryItem({ nlink: 1, path: "/stderr" })}
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );
@@ -114,7 +114,7 @@ describe("TaskFileViewer", function() {
           }
           params={{}}
           limitLogFiles={["stdout", "stderr"]}
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );
@@ -138,7 +138,7 @@ describe("TaskFileViewer", function() {
             })
           }
           params={{}}
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );

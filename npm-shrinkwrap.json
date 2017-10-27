@@ -25,9 +25,9 @@
       "resolved": "https://registry.npmjs.org/@dcos/http-service/-/http-service-0.1.0.tgz"
     },
     "@dcos/mesos-client": {
-      "version": "0.1.2",
-      "from": "@dcos/mesos-client@0.1.2",
-      "resolved": "https://registry.npmjs.org/@dcos/mesos-client/-/mesos-client-0.1.2.tgz"
+      "version": "0.1.5",
+      "from": "@dcos/mesos-client@0.1.5",
+      "resolved": "https://registry.npmjs.org/@dcos/mesos-client/-/mesos-client-0.1.5.tgz"
     },
     "@dcos/recordio": {
       "version": "0.1.4",

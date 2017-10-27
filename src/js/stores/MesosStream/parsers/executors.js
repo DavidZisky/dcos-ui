@@ -1,7 +1,4 @@
-import {
-  GET_EXECUTORS,
-  EXECUTOR_ADDED
-} from "../../../constants/MesosStreamMessageTypes";
+import { GET_EXECUTORS } from "../../../constants/MesosStreamMessageTypes";
 import { scalar } from "./ProtobufUtil";
 
 function processExecutor({ agent_id, executor_info }) {
@@ -13,7 +10,7 @@ function processExecutor({ agent_id, executor_info }) {
   return executor;
 }
 
-export function getExecutorsAction(state, message) {
+export default function getExecutorsAction(state, message) {
   if (message.type !== GET_EXECUTORS) {
     return state;
   }
@@ -21,15 +18,5 @@ export function getExecutorsAction(state, message) {
   const executors = (message.get_executors.executors || [])
     .map(processExecutor);
 
-  return Object.assign(state, { executors });
-}
-
-export function executorAddedAction(state, message) {
-  if (message.type !== EXECUTOR_ADDED) {
-    return state;
-  }
-
-  const executor = processExecutor(message.executor_added.executor);
-
-  return Object.assign(state, { executors: [...state.executors, executor] });
+  return Object.assign({}, state, { executors });
 }

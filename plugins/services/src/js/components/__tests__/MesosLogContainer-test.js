@@ -27,7 +27,7 @@ describe("MesosLogContainer", function() {
       <MesosLogContainer
         filePath="/some/file/path"
         logName="bar"
-        task={{ slave_id: "foo" }}
+        task={{ agent_id: "foo" }}
       />,
       this.container
     );
@@ -58,7 +58,7 @@ describe("MesosLogContainer", function() {
     it("should call startTailing when new path is provided", function() {
       this.instance.componentWillReceiveProps({
         filePath: "/other/file/path",
-        task: { slave_id: "foo" }
+        task: { agent_id: "foo" }
       });
       expect(MesosLogStore.startTailing.calls.count()).toEqual(2);
     });
@@ -66,7 +66,7 @@ describe("MesosLogContainer", function() {
     it("should call stopTailing when new path is provided", function() {
       this.instance.componentWillReceiveProps({
         filePath: "/other/file/path",
-        task: { slave_id: "foo" }
+        task: { agent_id: "foo" }
       });
       expect(MesosLogStore.stopTailing.calls.count()).toEqual(1);
     });
@@ -74,7 +74,7 @@ describe("MesosLogContainer", function() {
     it("shouldn't call startTailing when same path is provided", function() {
       this.instance.componentWillReceiveProps({
         filePath: "/some/file/path",
-        task: { slave_id: "foo" }
+        task: { agent_id: "foo" }
       });
       expect(MesosLogStore.startTailing.calls.count()).toEqual(1);
     });
@@ -82,7 +82,7 @@ describe("MesosLogContainer", function() {
     it("shouldn't call stopTailing when same path is provided", function() {
       this.instance.componentWillReceiveProps({
         filePath: "/some/file/path",
-        task: { slave_id: "foo" }
+        task: { agent_id: "foo" }
       });
       expect(MesosLogStore.stopTailing.calls.count()).toEqual(0);
     });
@@ -162,7 +162,7 @@ describe("MesosLogContainer", function() {
         <MesosLogContainer
           filePath={null}
           logName="foo"
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );
@@ -179,7 +179,7 @@ describe("MesosLogContainer", function() {
         <MesosLogContainer
           filePath="/some/file/path"
           logName={null}
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );
@@ -203,7 +203,7 @@ describe("MesosLogContainer", function() {
         <MesosLogContainer
           filePath="/some/file/path"
           logName={null}
-          task={{ slave_id: "foo" }}
+          task={{ agent_id: "foo" }}
         />,
         this.container
       );

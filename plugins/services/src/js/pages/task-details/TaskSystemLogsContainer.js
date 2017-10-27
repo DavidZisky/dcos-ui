@@ -68,7 +68,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
    */
   componentDidMount() {
     super.componentDidMount();
-    SystemLogStore.fetchStreamTypes(this.props.task.slave_id);
+    SystemLogStore.fetchStreamTypes(this.props.task.agent_id);
   }
 
   /**
@@ -95,7 +95,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
     const didWatchingChange = watching !== nextProps.watching;
 
     const didSlaveIdChange =
-      nextProps.task && task.slave_id !== nextProps.task.slave_id;
+      nextProps.task && task.agent_id !== nextProps.task.agent_id;
 
     return (
       didHighlightTextChange ||
@@ -174,7 +174,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
       limit: 0,
       skip_prev: 1
     });
-    const subscriptionID = SystemLogStore.startTailing(task.slave_id, params);
+    const subscriptionID = SystemLogStore.startTailing(task.agent_id, params);
 
     this.setState({ hasError: false, streams, selectedStream, subscriptionID });
   }
@@ -202,7 +202,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
       subscriptionID
     });
 
-    SystemLogStore.fetchRange(task.slave_id, params);
+    SystemLogStore.fetchRange(task.agent_id, params);
   }
 
   handleViewChange(selectedStream) {
@@ -217,7 +217,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
 
     // Unsubscribe and clean up stored log lines
     SystemLogStore.stopTailing(this.state.subscriptionID, true);
-    const subscriptionID = SystemLogStore.startTailing(task.slave_id, params);
+    const subscriptionID = SystemLogStore.startTailing(task.agent_id, params);
     this.setState({ isLoading: true, selectedStream, subscriptionID });
   }
 
@@ -308,7 +308,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
       <a
         className="button button-stroke"
         disabled={!task}
-        href={SystemLogUtil.getUrl(task.slave_id, params, false, "/download")}
+        href={SystemLogUtil.getUrl(task.agent_id, params, false, "/download")}
         key="download"
       >
         <Icon id="download" size="mini" />
@@ -362,7 +362,7 @@ class TaskSystemLogsContainer extends mixin(StoreMixin) {
 
 TaskSystemLogsContainer.propTypes = {
   task: React.PropTypes.shape({
-    slave_id: React.PropTypes.string
+    agent_id: React.PropTypes.string
   })
 };
 

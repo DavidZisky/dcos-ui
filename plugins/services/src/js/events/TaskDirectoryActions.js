@@ -2,7 +2,7 @@ import { RequestUtil } from "mesosphere-shared-reactjs";
 
 import AppDispatcher from "#SRC/js/events/AppDispatcher";
 import Config from "#SRC/js/config/Config";
-import MesosStateUtil from "#SRC/js/utils/MesosStateUtil";
+import TaskUtil from "../utils/TaskUtil";
 
 import {
   REQUEST_NODE_STATE_ERROR,
@@ -22,7 +22,7 @@ function getNodeStateURL(task, node) {
     nodePID = pid.substring(0, pid.indexOf("@"));
   }
 
-  return `${Config.rootUrl}/agent/${task.slave_id}/${nodePID}/state`;
+  return `${Config.rootUrl}/agent/${task.agent_id}/${nodePID}/state`;
 }
 
 var TaskDirectoryActions = {
@@ -69,7 +69,8 @@ var TaskDirectoryActions = {
   ),
 
   fetchDirectory(task, innerPath, nodeState) {
-    const path = MesosStateUtil.getTaskPath(nodeState, task, innerPath);
+    const path = TaskUtil.getTaskPath(nodeState, task, innerPath);
+
     if (path == null) {
       AppDispatcher.handleServerAction({
         type: REQUEST_TASK_DIRECTORY_ERROR,
@@ -80,7 +81,7 @@ var TaskDirectoryActions = {
     }
 
     RequestUtil.json({
-      url: `${Config.rootUrl}/agent/${task.slave_id}/files/browse`,
+      url: `${Config.rootUrl}/agent/${task.agent_id}/files/browse`,
       data: { path },
       success(directory) {
         AppDispatcher.handleServerAction({

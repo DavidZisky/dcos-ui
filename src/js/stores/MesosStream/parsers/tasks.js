@@ -40,7 +40,7 @@ export function getTasksAction(state, message) {
     return acc.concat(message.get_tasks[key].map(processTask));
   }, []);
 
-  return Object.assign(state, { tasks });
+  return Object.assign({}, state, { tasks });
 }
 
 export function taskAddedAction(state, message) {
@@ -50,7 +50,7 @@ export function taskAddedAction(state, message) {
 
   const task = processTask(message.task_added.task);
 
-  return Object.assign(state, { tasks: [...state.tasks, task] });
+  return Object.assign({}, state, { tasks: [...state.tasks, task] });
 }
 
 export function taskUpdatedAction(state, message) {
@@ -75,5 +75,5 @@ export function taskUpdatedAction(state, message) {
     return acc.concat(task);
   }, []);
 
-  return Object.assign(state, { tasks });
+  return Object.assign({}, state, { tasks });
 }

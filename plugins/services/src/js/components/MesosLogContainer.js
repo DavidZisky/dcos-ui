@@ -49,7 +49,7 @@ class MesosLogContainer extends mixin(StoreMixin) {
       return;
     }
 
-    MesosLogStore.startTailing(task.slave_id, filePath);
+    MesosLogStore.startTailing(task.agent_id, filePath);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,7 +72,7 @@ class MesosLogContainer extends mixin(StoreMixin) {
       MesosLogStore.stopTailing(props.filePath, true);
     }
     if (nextProps.filePath) {
-      MesosLogStore.startTailing(nextProps.task.slave_id, nextProps.filePath);
+      MesosLogStore.startTailing(nextProps.task.agent_id, nextProps.filePath);
     }
   }
 
@@ -101,8 +101,8 @@ class MesosLogContainer extends mixin(StoreMixin) {
       "fullLog" // Check fullLog at the end, as this could be a long string
     ];
 
-    // Check task (slave_id is the only property being used)
-    if (curProps.task.slave_id !== nextProps.task.slave_id) {
+    // Check task (agent_id is the only property being used)
+    if (curProps.task.agent_id !== nextProps.task.agent_id) {
       return true;
     }
 
@@ -161,7 +161,7 @@ class MesosLogContainer extends mixin(StoreMixin) {
       return;
     }
 
-    MesosLogStore.getPreviousLogs(task.slave_id, filePath);
+    MesosLogStore.getPreviousLogs(task.agent_id, filePath);
     this.setState({ isFetchingPrevious: true });
   }
 
