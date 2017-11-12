@@ -1,10 +1,8 @@
-FROM mesosphere/dcos-system-test-driver:latest
+FROM centos:7.3.1611
 
 # Specify the component versions to use
-ENV CYPRESS_VERSION="0.19.1" \
-    NODE_VERSION="4.4.7" \
-    NPM_VERSION="3.9" \
-    JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+ENV NODE_VERSION="4.4.7" \
+    NPM_VERSION="3.9"
 
 # Expose the 4200 port
 EXPOSE 4200
@@ -16,33 +14,33 @@ WORKDIR /dcos-ui
 # such as creating the scaffold in the user's repository
 COPY scripts/docker-entrypoint /usr/local/bin/dcos-ui-docker-entrypoint
 
+RUN set -x \
+  && yum update -y \
+  && yum group install -y "Development Tools" \
+  && yum install -y curl git optipng optipng-devel libpng libpng-devel \
+  && git clone https://github.com/DavidZisky/dcos-ui dcos-ui
+
 # Install required components & prepare environment
 RUN set -x \
-  # Install node 4.4.7 & npm 3.9
   && curl -o- https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz | tar -C /usr/local --strip-components=1 -zx \
-  && npm install -g npm@${NPM_VERSION} \
-  # Install cypress dependencies & JRE (required by Jenkins)
-  && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-  && apt-get update \
-  && apt-get install -y xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 \
-  && apt-get install -t jessie-backports -y openjdk-8-jre-headless ca-certificates-java \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
-  # Post-install java certificates
-  /var/lib/dpkg/info/ca-certificates-java.postinst configure \
+  && npm install -g npm@${NPM_VERSION}
+
+RUN set -x \
   # Install npm dependencies
-  && cd /dcos-ui \
-  && npm install -g cypress-cli git://github.com/johntron/http-server.git#proxy-secure-flag \
-  # Install cypress
-  && cypress install --cypress-version ${CYPRESS_VERSION} \
-  # Install dcos-launch
-  && curl 'https://downloads.dcos.io/dcos-test-utils/bin/linux/dcos-launch' > /usr/local/bin/dcos-launch \
-  && chmod +x /usr/local/bin/dcos-launch \
-  # Ensure entrypoint is executable
-  && chmod +x /usr/local/bin/dcos-ui-docker-entrypoint \
+  && cd dcos-ui \
+  && npm install -g node-pre-gyp gulp\
+  && npm install \
+  #&& cd /dcos-ui/dcos-ui/node_modules/optipng-bin \
+  #&& node install.js \
   # Make sure bash is the default shell
   && rm /bin/sh \
   && ln -sf /bin/bash /bin/sh
+
+RUN set -x \
+  && git clone https://github.com/mesosphere/marathon.git \
+  && mkdir -p dcos-ui/src/resources/raml/marathon/v2/types \
+  && cp marathon/docs/docs/rest-api/public/api/v2/types/* dcos-ui/src/resources/raml/marathon/v2/types/ \
+  && rm -rf marathon
 
 # Define entrypoint
 ENTRYPOINT [ "/bin/bash", "/usr/local/bin/dcos-ui-docker-entrypoint" ]
