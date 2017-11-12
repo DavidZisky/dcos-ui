@@ -14,8 +14,6 @@ fi
 # Pass through commands or run `tail -f /dev/null` to keep the container alive
 # when started in background
 #
-if [[ -n $* ]]; then
-  eval $*
-else
-  tail -f /dev/null
-fi
+cd /dcos-ui/dcos-ui
+
+npm run serve
